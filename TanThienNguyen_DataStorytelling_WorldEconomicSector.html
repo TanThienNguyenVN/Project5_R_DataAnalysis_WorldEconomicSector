@@ -326,6 +326,18 @@ pre code {
 <div id="dataset-description" class="section level2">
 <h2>3.1. Dataset description</h2>
 <p>The datasets are gathered from the Databank of World Bank (<a href="https://databank.worldbank.org/home.aspx" class="uri">https://databank.worldbank.org/home.aspx</a>) with the last updated date on December 16, 2021. The name of datasets will then be changed for easy understanding and usage.</p>
+<div id="country-dataset-metadata_country_api_ny.gdp.pcap.cd" class="section level3">
+<h3>Country Dataset (Metadata_Country_API_NY.GDP.PCAP.CD)</h3>
+<p>Country dataset contains 217 countries and regions around the world. Countries are grouped by region and income group (World Bank, 2021).</p>
+</div>
+<div id="population-totalsp.pop.totl" class="section level3">
+<h3>Population Total(SP.POP.TOTL)</h3>
+<p>Total population is based on the de facto definition of population, which counts all residents regardless of legal status or citizenship. The values shown are midyear estimates (World Bank, 2021).</p>
+</div>
+<div id="gdp-per-capita-current-us-ny.gdp.pcap.cd" class="section level3">
+<h3>GDP per capita (current US$) (NY.GDP.PCAP.CD)</h3>
+<p>GDP per capita is gross domestic product divided by midyear population. GDP is the sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products. It is calculated without making deductions for depreciation of fabricated assets or depletion and degradation of natural resources (World Bank, 2021).</p>
+</div>
 </div>
 <div id="tidy-data" class="section level2">
 <h2>3.2. Tidy Data</h2>
@@ -349,13 +361,37 @@ pre code {
 <p>Due to the effect of Covid-19 on worldwide GDP, the data for the year 2020 would be considered to be removed before data analysis.</p>
 <div id="libraries" class="section level2">
 <h2>4.1. Libraries</h2>
-<p>The libraries used for data analysis are listed below. If you would like to run R code, please kindly install these packages first. . The R code was hide to decrease the size of HTML</p>
+<p>The libraries used for data analysis are listed below. If you would like to run R code, please kindly install these packages first.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;gganimate&quot;)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;gifski&quot;)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&#39;png&#39;)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gifski)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span></code></pre></div>
 </div>
 <div id="data-loading" class="section level2">
 <h2>4.2. Data Loading</h2>
 <div id="import-datasets." class="section level3">
 <h3>4.2.1. Import Datasets.</h3>
-<p>Datasets were imported from csv files. . The R code was hide to decrease the size of HTML</p>
+<p>Datasets were imported from csv files</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get data from csv files</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>country <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/country.csv&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>population <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/population_total.csv&quot;</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>gdp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/gdp.csv&quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>agripercent <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/agri_percent.csv&quot;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>agritotal <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/agri_total.csv&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>industrypercent <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/industry_percent.csv&quot;</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>servicepercent <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/service_percent.csv&quot;</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>tourism_arr <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/tourism_arrival.csv&quot;</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>tourism_receipt <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/tourism_receipt.csv&quot;</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>emp_agri <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/emp_agri.csv&quot;</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>emp_industry <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/emp_industry.csv&quot;</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>emp_service <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;Dataset/emp_service.csv&quot;</span>)</span></code></pre></div>
 </div>
 <div id="datasets-summary" class="section level3">
 <h3>4.2.2. Datasets Summary</h3>
@@ -368,7 +404,11 @@ pre code {
 <li>X196i -&gt; X202i: Year columns contain data</li>
 </ul>
 <p>Below is the summary and structure of an example dataset - GDP Per Capita.</p>
-<p>Because there is a lot of year columns and their structures are the same, the first year column “X1960” will be selected to be pulled out: The R code was hide to decrease the size of HTML</p>
+<p>Because there is a lot of year columns and their structures are the same, the first year column “X1960” will be selected to be pulled out:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Datasets summary</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;ï..Country.Name&quot;</span>, <span class="st">&quot;Country.Code&quot;</span>  ,  <span class="st">&quot;Indicator.Name&quot;</span> , <span class="st">&quot;Indicator.Code&quot;</span> , <span class="st">&quot;X1960&quot;</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gdp[cols])</span></code></pre></div>
 <pre><code>##  ï..Country.Name    Country.Code       Indicator.Name     Indicator.Code    
 ##  Length:266         Length:266         Length:266         Length:266        
 ##  Class :character   Class :character   Class :character   Class :character  
@@ -385,6 +425,7 @@ pre code {
 ##  3rd Qu.: 478.83  
 ##  Max.   :3007.12  
 ##  NA&#39;s   :138</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gdp[cols])</span></code></pre></div>
 <pre><code>## &#39;data.frame&#39;:    266 obs. of  5 variables:
 ##  $ ï..Country.Name: chr  &quot;Aruba&quot; &quot;Africa Eastern and Southern&quot; &quot;Afghanistan&quot; &quot;Africa Western and Central&quot; ...
 ##  $ Country.Code   : chr  &quot;ABW&quot; &quot;AFE&quot; &quot;AFG&quot; &quot;AFW&quot; ...
@@ -395,138 +436,310 @@ pre code {
 </div>
 <div id="data-cleaning" class="section level2">
 <h2>4.3. Data Cleaning</h2>
-<p>Rename some columns, select only necessary columns for data analysis, and exclude the year 2020 due to Covid-19 affected a lot in the world economy. . The R code was hide to decrease the size of HTML</p>
+<p>Rename some columns, select only necessary columns for data analysis, and exclude the year 2020 due to Covid-19 affected a lot in the world economy.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Country</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>country <span class="ot">&lt;-</span> country <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Region <span class="sc">!=</span> <span class="st">&quot;&quot;</span> <span class="sc">&amp;</span> IncomeGroup <span class="sc">!=</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> ï..CountryCode)<span class="sc">%&gt;%</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> TableName) <span class="sc">%&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, Region, IncomeGroup, CountryName)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># GDP per capita</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>gdp <span class="ot">&lt;-</span> gdp <span class="sc">%&gt;%</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Population</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>population <span class="ot">&lt;-</span> population <span class="sc">%&gt;%</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Agriculture % GDP</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>agripercent <span class="ot">&lt;-</span> agripercent <span class="sc">%&gt;%</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Agriculture Total</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>agritotal <span class="ot">&lt;-</span> agritotal <span class="sc">%&gt;%</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry % GDP</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>industrypercent <span class="ot">&lt;-</span> industrypercent <span class="sc">%&gt;%</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Service % GDP</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>servicepercent <span class="ot">&lt;-</span> servicepercent <span class="sc">%&gt;%</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a><span class="co"># International Tourism Arrival</span></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>tourism_arr <span class="ot">&lt;-</span> tourism_arr <span class="sc">%&gt;%</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="co"># International Tourism Receipt</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>tourism_receipt <span class="ot">&lt;-</span> tourism_receipt <span class="sc">%&gt;%</span></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Employment Pct in Agriculture</span></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>emp_agri <span class="ot">&lt;-</span> emp_agri <span class="sc">%&gt;%</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Employment Pct in Industry</span></span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>emp_industry <span class="ot">&lt;-</span> emp_industry <span class="sc">%&gt;%</span></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Employment Pct in Service</span></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>emp_service <span class="ot">&lt;-</span> emp_service <span class="sc">%&gt;%</span></span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> ï..Country.Name)<span class="sc">%&gt;%</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryCode =</span> Country.Code) <span class="sc">%&gt;%</span></span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>), <span class="sc">-</span><span class="fu">c</span>(X,X2020))</span></code></pre></div>
 </div>
 <div id="data-combination-1" class="section level2">
 <h2>4.4. Data combination</h2>
-<p>Join datasets to get sufficient attributes. The R code was hide to decrease the size of HTML</p>
+<p>Join datasets to get sufficient attributes</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GDP join Country</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>gdp_group <span class="ot">&lt;-</span> gdp <span class="sc">%&gt;%</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(country,<span class="at">by=</span><span class="st">&quot;CountryCode&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName.x, Region, IncomeGroup, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> CountryName.x)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Population join Country</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>population_group <span class="ot">&lt;-</span> population <span class="sc">%&gt;%</span> </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(country,<span class="at">by=</span><span class="st">&quot;CountryCode&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName.x, Region, IncomeGroup, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> CountryName.x)</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Agripercent join Country</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>agripercent_group <span class="ot">&lt;-</span> agripercent <span class="sc">%&gt;%</span> </span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(country,<span class="at">by=</span><span class="st">&quot;CountryCode&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName.x, Region, IncomeGroup, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> CountryName.x)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Agripercent join Country</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>agritotal_group <span class="ot">&lt;-</span> agritotal <span class="sc">%&gt;%</span> </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(country,<span class="at">by=</span><span class="st">&quot;CountryCode&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName.x, Region, IncomeGroup, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> CountryName.x)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Industrypercent join Country</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>industrypercent_group <span class="ot">&lt;-</span> industrypercent <span class="sc">%&gt;%</span> </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(country,<span class="at">by=</span><span class="st">&quot;CountryCode&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName.x, Region, IncomeGroup, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> CountryName.x)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Servicepercent join Country</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>servicepercent_group <span class="ot">&lt;-</span> servicepercent <span class="sc">%&gt;%</span> </span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(country,<span class="at">by=</span><span class="st">&quot;CountryCode&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName.x, Region, IncomeGroup, <span class="fu">contains</span>(<span class="st">&quot;X&quot;</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> CountryName.x)</span></code></pre></div>
 </div>
 <div id="transform-to-tidy-data" class="section level2">
 <h2>4.5. Transform to Tidy Data</h2>
 <p>Transform datasets to the tidy data and convert Year column into Date format</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform GDP to tidy data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gdp_new <span class="ot">&lt;-</span> gdp_group <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;GDP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform GDP to tidy data</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>population_new <span class="ot">&lt;-</span> population_group <span class="sc">%&gt;%</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;GDP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform Agripercent to tidy data</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>agripercent_new <span class="ot">&lt;-</span> agripercent_group <span class="sc">%&gt;%</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;GDP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform Agripercent to tidy data</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>agritotal_new <span class="ot">&lt;-</span> agritotal_group <span class="sc">%&gt;%</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;GDP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform Industrypercent to tidy data</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>industrypercent_new <span class="ot">&lt;-</span> industrypercent_group <span class="sc">%&gt;%</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;GDP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform Servicepercent to tidy data</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>servicepercent_new <span class="ot">&lt;-</span> servicepercent_group <span class="sc">%&gt;%</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;GDP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform tourism arrivals to tidy data</span></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>tourism_arr_new <span class="ot">&lt;-</span> tourism_arr <span class="sc">%&gt;%</span></span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;GDP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform tourism receipt to tidy data</span></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>tourism_receipt_new <span class="ot">&lt;-</span> tourism_receipt <span class="sc">%&gt;%</span></span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;GDP&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform tourism receipt to tidy data</span></span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>emp_agri_new <span class="ot">&lt;-</span> emp_agri <span class="sc">%&gt;%</span></span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Agriculture&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform tourism receipt to tidy data</span></span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>emp_industry_new <span class="ot">&lt;-</span> emp_industry <span class="sc">%&gt;%</span></span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Industry&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform tourism receipt to tidy data</span></span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>emp_service_new <span class="ot">&lt;-</span> emp_service <span class="sc">%&gt;%</span></span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Service&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year =</span> <span class="fu">str_remove</span>(Year,<span class="st">&quot;X&quot;</span>),</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year))</span></code></pre></div>
 </div>
 <div id="data-pre-processing-for-visualization" class="section level2">
 <h2>4.6. Data Pre-processing for Visualization</h2>
 <div id="merge-employment-percentage-datasets" class="section level3">
 <h3>4.6.1. Merge employment percentage datasets</h3>
 <p>Employment percentages datasets will be merged for comparation.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>emp_percent <span class="ot">&lt;-</span> emp_agri_new <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(emp_industry_new, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>, <span class="st">&quot;Year&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(emp_service_new, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>, <span class="st">&quot;Year&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName.x, Year, Agriculture, Industry,Service)<span class="sc">%&gt;%</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> CountryName.x)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>emp_percent_new <span class="ot">&lt;-</span> emp_percent <span class="sc">%&gt;%</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Year&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Sector&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Percentage&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>emp_percent <span class="ot">&lt;-</span> emp_agri_new <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(emp_industry_new, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>, <span class="st">&quot;Year&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(emp_service_new, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>, <span class="st">&quot;Year&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(CountryCode, CountryName.x, Year, Agriculture, Industry,Service)<span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CountryName =</span> CountryName.x)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>emp_percent_new <span class="ot">&lt;-</span> emp_percent <span class="sc">%&gt;%</span> </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span><span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Year&quot;</span>), <span class="at">names_to =</span> <span class="st">&quot;Sector&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Percentage&quot;</span>)</span></code></pre></div>
 </div>
 <div id="create-new-datasets-and-variables" class="section level3">
 <h3>4.6.2. Create new datasets and variables</h3>
 <p>GDP and other economic sectors information will be pre-processed here.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GDP</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> gdp_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="st">&quot;World&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">GDP =</span> avg_GDP) <span class="sc">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>high_low_middle <span class="ot">&lt;-</span> gdp_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IncomeGroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;High income&quot;</span>, <span class="st">&quot;Upper middle income&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(IncomeGroup, Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> IncomeGroup, </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDP =</span> avg_GDP)<span class="sc">%&gt;%</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>Vietnam <span class="ot">&lt;-</span> gdp_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountryCode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VNM&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> CountryName)<span class="sc">%&gt;%</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>gdp_graph <span class="ot">&lt;-</span> <span class="fu">rbind</span>(world,high_low_middle,Vietnam)</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Agriculture Percent</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>agri_world <span class="ot">&lt;-</span> agripercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="st">&quot;World&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">GDP =</span> avg_GDP) <span class="sc">%&gt;%</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>agri_group <span class="ot">&lt;-</span> agripercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IncomeGroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;High income&quot;</span>, <span class="st">&quot;Lower middle income&quot;</span>, <span class="st">&quot;Upper middle income&quot;</span>, <span class="st">&quot;Low income&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(IncomeGroup, Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> IncomeGroup, </span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDP =</span> avg_GDP)<span class="sc">%&gt;%</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>agri_vietnam <span class="ot">&lt;-</span> agripercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountryCode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VNM&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> CountryName)<span class="sc">%&gt;%</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>agripercent_graph <span class="ot">&lt;-</span> <span class="fu">rbind</span>(agri_world,agri_group,agri_vietnam)</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry Percent</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>industry_world <span class="ot">&lt;-</span> industrypercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="st">&quot;World&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">GDP =</span> avg_GDP) <span class="sc">%&gt;%</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>industry_group <span class="ot">&lt;-</span> industrypercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IncomeGroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;High income&quot;</span>, <span class="st">&quot;Lower middle income&quot;</span>, <span class="st">&quot;Upper middle income&quot;</span>, <span class="st">&quot;Low income&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(IncomeGroup, Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> IncomeGroup, </span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDP =</span> avg_GDP)<span class="sc">%&gt;%</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>industry_vietnam <span class="ot">&lt;-</span> industrypercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountryCode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VNM&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> CountryName)<span class="sc">%&gt;%</span></span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>industrypercent_graph <span class="ot">&lt;-</span> <span class="fu">rbind</span>(industry_world,industry_group,industry_vietnam)</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Service Percent</span></span>
-<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>service_world <span class="ot">&lt;-</span> servicepercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="st">&quot;World&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">GDP =</span> avg_GDP) <span class="sc">%&gt;%</span></span>
-<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>service_group <span class="ot">&lt;-</span> servicepercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IncomeGroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;High income&quot;</span>, <span class="st">&quot;Lower middle income&quot;</span>, <span class="st">&quot;Upper middle income&quot;</span>, <span class="st">&quot;Low income&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(IncomeGroup, Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> IncomeGroup, </span>
-<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDP =</span> avg_GDP)<span class="sc">%&gt;%</span></span>
-<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>service_vietnam <span class="ot">&lt;-</span> servicepercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountryCode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VNM&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> CountryName)<span class="sc">%&gt;%</span></span>
-<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
-<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>servicepercent_graph <span class="ot">&lt;-</span> <span class="fu">rbind</span>(service_world,service_group,service_vietnam)</span>
-<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge service and gdp </span></span>
-<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>service_gdp <span class="ot">&lt;-</span> servicepercent_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(gdp_new, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Year&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(population_new, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Year&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ServiceInGDP =</span> GDP.x,</span>
-<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDPPerCapita =</span> GDP.y,</span>
-<span id="cb4-104"><a href="#cb4-104" aria-hidden="true" tabindex="-1"></a>         <span class="at">Population =</span> GDP) <span class="sc">%&gt;%</span></span>
-<span id="cb4-105"><a href="#cb4-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Population =</span> Population<span class="sc">/</span><span class="dv">1000000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GDP</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> gdp_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="st">&quot;World&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">GDP =</span> avg_GDP) <span class="sc">%&gt;%</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>high_low_middle <span class="ot">&lt;-</span> gdp_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IncomeGroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;High income&quot;</span>, <span class="st">&quot;Upper middle income&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(IncomeGroup, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> IncomeGroup, </span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDP =</span> avg_GDP)<span class="sc">%&gt;%</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>Vietnam <span class="ot">&lt;-</span> gdp_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountryCode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VNM&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> CountryName)<span class="sc">%&gt;%</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>gdp_graph <span class="ot">&lt;-</span> <span class="fu">rbind</span>(world,high_low_middle,Vietnam)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Agriculture Percent</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>agri_world <span class="ot">&lt;-</span> agripercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="st">&quot;World&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">GDP =</span> avg_GDP) <span class="sc">%&gt;%</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>agri_group <span class="ot">&lt;-</span> agripercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IncomeGroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;High income&quot;</span>, <span class="st">&quot;Lower middle income&quot;</span>, <span class="st">&quot;Upper middle income&quot;</span>, <span class="st">&quot;Low income&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(IncomeGroup, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> IncomeGroup, </span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDP =</span> avg_GDP)<span class="sc">%&gt;%</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>agri_vietnam <span class="ot">&lt;-</span> agripercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountryCode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VNM&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> CountryName)<span class="sc">%&gt;%</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>agripercent_graph <span class="ot">&lt;-</span> <span class="fu">rbind</span>(agri_world,agri_group,agri_vietnam)</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Industry Percent</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>industry_world <span class="ot">&lt;-</span> industrypercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="st">&quot;World&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">GDP =</span> avg_GDP) <span class="sc">%&gt;%</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>industry_group <span class="ot">&lt;-</span> industrypercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IncomeGroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;High income&quot;</span>, <span class="st">&quot;Lower middle income&quot;</span>, <span class="st">&quot;Upper middle income&quot;</span>, <span class="st">&quot;Low income&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(IncomeGroup, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> IncomeGroup, </span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDP =</span> avg_GDP)<span class="sc">%&gt;%</span></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>industry_vietnam <span class="ot">&lt;-</span> industrypercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountryCode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VNM&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> CountryName)<span class="sc">%&gt;%</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>industrypercent_graph <span class="ot">&lt;-</span> <span class="fu">rbind</span>(industry_world,industry_group,industry_vietnam)</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a><span class="co"># Service Percent</span></span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>service_world <span class="ot">&lt;-</span> servicepercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Country =</span> <span class="st">&quot;World&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">GDP =</span> avg_GDP) <span class="sc">%&gt;%</span></span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>service_group <span class="ot">&lt;-</span> servicepercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(IncomeGroup <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;High income&quot;</span>, <span class="st">&quot;Lower middle income&quot;</span>, <span class="st">&quot;Upper middle income&quot;</span>, <span class="st">&quot;Low income&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(IncomeGroup, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avg_GDP =</span> <span class="fu">mean</span>(GDP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> IncomeGroup, </span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDP =</span> avg_GDP)<span class="sc">%&gt;%</span></span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>service_vietnam <span class="ot">&lt;-</span> servicepercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CountryCode <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;VNM&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Country =</span> CountryName)<span class="sc">%&gt;%</span></span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Country,Year,GDP)</span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>servicepercent_graph <span class="ot">&lt;-</span> <span class="fu">rbind</span>(service_world,service_group,service_vietnam)</span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge service and gdp </span></span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>service_gdp <span class="ot">&lt;-</span> servicepercent_new <span class="sc">%&gt;%</span></span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(gdp_new, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Year&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(population_new, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;CountryCode&quot;</span>,<span class="st">&quot;CountryName&quot;</span>,<span class="st">&quot;Year&quot;</span>,<span class="st">&quot;Region&quot;</span>,<span class="st">&quot;IncomeGroup&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ServiceInGDP =</span> GDP.x,</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>         <span class="at">GDPPerCapita =</span> GDP.y,</span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>         <span class="at">Population =</span> GDP) <span class="sc">%&gt;%</span></span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Population =</span> Population<span class="sc">/</span><span class="dv">1000000</span>)</span></code></pre></div>
 <p>Data cleaning and data transformation was completed. Now, it is time to go to the most interesting part. Visualization.</p>
 </div>
 </div>
