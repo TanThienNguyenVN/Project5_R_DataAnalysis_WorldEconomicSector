@@ -4,4 +4,4 @@
 - The target of Vietnam is reaching the high-income group by the year 2045 (World Bank, 2020). 
 - Whether Vietnam should treat Agriculture, Forestry, and Fishing as the spearhead of the economy to reach the target make a controversy among community. It is not enough to evaluate sufficiently situation and direction if only look into Vietnam’s strength and what Vietnam has in history. 
 - This project aims to clarify the above problem by analyzing data from the World Bank
-- Now, let's get started [Data Storytelling with R](https://github.com/TanThienNguyenVN/Project5_R_DataAnalysis_WorldEconomicSector/blob/main/TanThienNguyen_DataStorytelling_WorldEconomicSector.html)
+- Now, let's get started [Data Storytelling with R](https://github.com/TanThienNguyenVN/Project5_R_DataAnalysis_WorldEconomicSector/blob/main/TanThienNguyen_DataStorytelling_WorldEconomicSector.pdf)
